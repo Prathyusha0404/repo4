@@ -1,19 +1,37 @@
-# Program to add natural
-# numbers up to 
-# sum = 1+2+3+...+n
+import requests
 
-# To take input from the user,
-# n = int(input("Enter n: "))
+# Replace these values with your API endpoint and authentication token
+api_endpoint = 'https://api.example.com/bookings'
+auth_token = 'YOUR_AUTH_TOKEN'
 
-n = 10
+# Replace these values with the passenger details and flight information
+passenger_name = 'John Doe'
+flight_number = 'AA123'
+departure_date = '2023-03-15'
+origin = 'JFK'
+destination = 'LAX'
 
-# initialize sum and counter
-sum = 0
-i = 1
+# Define the request payload
+payload = {
+    'passenger_name': passenger_name,
+    'flight_number': flight_number,
+    'departure_date': departure_date,
+    'origin': origin,
+    'destination': destination,
+}
 
-while i <= n:
-    sum = sum + i
-    i = i+1    # update counter
+# Define the request headers, including the authentication token
+headers = {
+    'Authorization': f'Bearer {auth_token}',
+    'Content-Type': 'application/json'
+}
 
-# print the sum
-print("The sum is", sum)
+# Make the HTTP POST request to book the flight
+response = requests.post(api_endpoint, json=payload, headers=headers)
+
+# Check the response status code to see if the booking was successful
+if response.status_code == 201:
+    print('Flight booking successful!')
+else:
+    print(f'Error booking flight: {response.json()["message"]}')
+
